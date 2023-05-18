@@ -1,11 +1,12 @@
+echo "# MyNote" >> README.md
+git init
+git add README.md
+git commit -m "first commit"
+git branch -M main //更改当前分支名称
+git remote add origin https://github.com/Meitwu/MyNote.git  
+git push -u origin main
 
-## eslint初始化
-npm init @eslint/config
 
-## vite与webpack区别
-1.现实问题
-    当我们构建大型应用时，需要处理的javascript代码量也呈指数级增长，项目启动会非常缓慢，文件修改也会比较迟钝，会比较影响开发效率
-2.缓慢的服务器启动
-    vite通过一开始将应用中的模块区分为依赖跟源码两类，改进了开发服务器启动时间
-3.缓慢的更新
-    一些打包器开发服务器将构建内容存入内存中，这样他们只需要在文件更改时使模块图的一部分，但是仍然需要构建并重载整个页面，即使打包器支持了动态模块热替换（HMR），但是在实际开发中项目比较大时，热更新速度还是比较慢
+git remote add origin https://github.com/Meitwu/MyNote.git
+git branch -M main
+git push -u origin main
