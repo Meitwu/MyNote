@@ -1,6 +1,6 @@
 import { Tree, Input, Button } from 'antd'
 import useBaseRequest from '@/hooks/useBaseRequest'
-import React, { useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useSetState } from 'ahooks'
 
 const { Search } = Input
@@ -17,7 +17,6 @@ export default function EasyTree(props) {
     {
       manual: true,
       onSuccess: (res, config) => {
-        console.log('config', config)
         const data = res.result.data.map((item) => ({
           title: item.name,
           key: item.id,

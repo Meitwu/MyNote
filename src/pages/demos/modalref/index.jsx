@@ -1,42 +1,55 @@
-import React, { useState, useRef, useEffect } from 'react'
-import { Modal } from 'antd'
-import { ReactDOM } from 'react'
-import styled from '@emotion/styled'
-function MyComponent() {
-  const [visible, setVisible] = useState(true)
-  const iframeRef = useRef(null)
+import React from 'react'
+import Select from 'antd/lib/select'
+const items = [
+  { code: 201, text: 'text1 code' },
+  { code: 202, text: 'text2 code' },
+  { code: 203, text: 'text3 code' },
+  { code: 204, text: 'text4 code' },
+  { code: 205, text: 'text5 code' },
+  { code: 206, text: 'text6 code' }
+]
+const { Option } = Select
 
-  const ModalBox = styled(Modal)({
-    '.ant-modal-mask': {
-      display: 'none'
-    }
-  })
-
-  const handleOk = () => {
-    // 获取iframe中的内容
-    console.log(iframeRef.current.contentDocument.body.innerHTML)
-    setVisible(false)
-  }
-  useEffect(() => {
-    setVisible(false)
-  }, [])
-  const iframeDom = <iframe ref={iframeRef} src="https://example.com" />
-  // const modalInstance = ReactDOM.createPortal(<Modal />, 'div')
+export default function () {
   return (
-    <>
-      <button onClick={() => setVisible(true)}>打开 Modal</button>
-      <button onClick={() => console.log(iframeRef, iframeDom)}>
-        打开 Modal
-      </button>
-      <ModalBox
-        mask={false}
-        visible={visible}
-        onOk={handleOk}
-        onCancel={() => setVisible(false)}
-      >
-        {iframeDom}
-      </ModalBox>
-    </>
+    <Select
+      style={{ width: 200 }}
+      onChange={(e) => {}}
+      placeholder="custom dropdown render"
+      defaultValue={205}
+      dropdownRender={(menu) => {
+        return (
+          <>
+            <div
+              style={{
+                display: 'flex',
+                justifyContent: 'space-between',
+                padding: '0 10px'
+              }}
+            >
+              <div>区间名称</div>
+              <div>区间编码</div>
+            </div>
+            {menu}
+          </>
+        )
+      }}
+      optionLabelProp="title" //使用 optionLabelProp 指定回填到选择框的 Option 属性。
+    >
+      {items.map((item, index) => (
+        <Option key={index} value={item.code} title={item.text}>
+          <span style={{ float: 'left' }}>{item.text}</span>
+          <span style={{ float: 'right' }}>{item.code}</span>
+          <button
+            onClick={(e) => {
+              e.stopPropagation()
+              console.log('11111')
+            }}
+          >
+            111
+          </button>
+        </Option>
+      ))}
+    </Select>
   )
 }
-export default MyComponent

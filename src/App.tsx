@@ -11,6 +11,7 @@ import { state as initstate } from './store/state'
 import { routes, menuItem } from './router/routes'
 import { HashRouter, Routes, Route } from 'react-router-dom'
 import AuthRoute from '@/router/AuthRoute'
+import { ConfigProvider } from 'antd'
 
 const Suspensebox = (
   children:
@@ -24,6 +25,7 @@ const Suspensebox = (
 ) => {
   return <Suspense>{children}</Suspense>
 }
+
 function App() {
   const [state, dispatch] = useReducer(reducer, initstate)
 
@@ -33,11 +35,19 @@ function App() {
         <Route
           path={item.path}
           element={
-            <AuthRoute
-            //  auth={item.auth} path={item.path} key={item.path}
+            <ConfigProvider
+              theme={{
+                token: {
+                  colorPrimary: '#00b96b'
+                }
+              }}
             >
-              <>{Suspensebox(item.element)}</>
-            </AuthRoute>
+              <AuthRoute
+              //  auth={item.auth} path={item.path} key={item.path}
+              >
+                <>{Suspensebox(item.element)}</>
+              </AuthRoute>
+            </ConfigProvider>
           }
           key={item.path}
         >

@@ -13,12 +13,12 @@ export function Filterparent(
     return {
       ...item,
       parentkey: parentkey.concat([item.key]),
-      parentlabel: parentlabel.concat([item.label]),
+      parentlabel: parentlabel.concat([item['label']]),
       children: item.children
         ? Filterparent(
             item.children,
             parentkey.concat([item.key]),
-            parentlabel.concat([item.label])
+            parentlabel.concat([item['label']])
           )
         : undefined
     }

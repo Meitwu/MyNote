@@ -96,24 +96,24 @@ const TableEditForm = () => {
             </Form.Item>
           )
         }
-      },
-      {
-        title: '操作',
-        dataIndex: 'operate',
-        className: 'operate',
-        width: 120,
-        render(text, field) {
-          return (
-            <>
-              <PlusOutlined onClick={() => add()} />
-              <MinusCircleOutlined
-                style={{ marginLeft: 10 }}
-                onClick={() => remove(field.name)}
-              />
-            </>
-          )
-        }
       }
+      // {
+      //   title: '操作',
+      //   dataIndex: 'operate',
+      //   className: 'operate',
+      //   width: 120,
+      //   render(text, field) {
+      //     return (
+      //       <>
+      //         <PlusOutlined onClick={() => add()} />
+      //         <MinusCircleOutlined
+      //           style={{ marginLeft: 10 }}
+      //           onClick={() => remove(field.name)}
+      //         />
+      //       </>
+      //     )
+      //   }
+      // }
     ]
   }
 

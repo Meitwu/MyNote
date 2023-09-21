@@ -3,7 +3,8 @@ export const state: contextStateType = {
   name: '',
   id: '',
   roleid: '',
-  count: 0,
+  count: 10,
   items: '',
+  theme: '#101010',
   selectedkeys: []
 }

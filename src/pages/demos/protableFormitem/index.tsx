@@ -1,181 +1,188 @@
-/* eslint-disable no-console */
-import { PlusOutlined } from '@ant-design/icons'
 import type { ProColumns } from '@ant-design/pro-components'
 import { ProTable } from '@ant-design/pro-components'
-import { Button, Input, Select } from 'antd'
-import { resolve } from 'path'
-import React, { useEffect, useState } from 'react'
 
-type GithubIssueItem = {
-  key: number
-  name: string
-  createdAt: number
-}
-
-const MySelect: React.FC<{
-  state: {
-    type: number
+const cascaderOptions = [
+  {
+    field: 'front end',
+    value: 'fe',
+    language: [
+      {
+        field: 'Javascript',
+        value: 'js'
+      },
+      {
+        field: 'Typescript',
+        value: 'ts'
+      }
+    ]
+  },
+  {
+    field: 'back end',
+    value: 'be',
+    language: [
+      {
+        field: 'Java',
+        value: 'java'
+      },
+      {
+        field: 'Go',
+        value: 'go'
+      }
+    ]
   }
-  /** Value 和 onChange 会被自动注入 */
-  value?: string
-  onChange?: (value: string) => void
-}> = (props) => {
-  const { state } = props
+]
 
-  const [innerOptions, setOptions] = useState<
-    {
-      label: React.ReactNode
-      value: number
-    }[]
-  >([])
-
-  useEffect(() => {
-    const { type } = state || {}
-    if (type === 2) {
-      setOptions([
-        {
-          label: '星期一',
-          value: 1
-        },
-        {
-          label: '星期二',
-          value: 2
-        }
-      ])
-    } else {
-      setOptions([
-        {
-          label: '一月',
-          value: 1
-        },
-        {
-          label: '二月',
-          value: 2
-        }
-      ])
-    }
-  }, [JSON.stringify(state)])
-
-  return (
-    <Select
-      options={innerOptions}
-      value={props.value}
-      onChange={props.onChange}
-    />
-  )
+const valueEnumMap = {
+  0: 'running',
+  1: 'online',
+  2: 'error'
 }
 
-export default () => {
-  const columns: ProColumns<GithubIssueItem>[] = [
-    {
-      title: '序号',
-      dataIndex: 'index',
-      valueType: 'indexBorder'
-    },
-    {
-      title: '标题',
-      dataIndex: 'name'
-    },
-    {
-      title: '动态表单',
-      key: 'direction',
-      hideInTable: true,
-      dataIndex: 'direction',
-      renderFormItem: (item, { type, defaultRender, ...rest }, form) => {
-        // if (type === 'form') {
-        //   return null
-        // }
-        const stateType = form.getFieldValue('state')
-        // if (stateType === 3) {
-        //   return <Input />
-        // }
-        // if (stateType === 4) {
-        //   return null
-        // }
-        return (
-          <MySelect
-            {...rest}
-            state={{
-              type: stateType
-            }}
-          />
-        )
+export type TableListItem = {
+  key: number
+  status: string | number
+  cascader: string[]
+  treeSelect: string[]
+}
+const tableListDataSource: TableListItem[] = []
+
+for (let i = 0; i < 2; i += 1) {
+  tableListDataSource.push({
+    key: i,
+    status: valueEnumMap[Math.floor(Math.random() * 10) % 3],
+    cascader: ['fe', 'js'],
+    treeSelect: ['fe', 'js']
+  })
+}
+
+const valueEnum = {
+  all: { text: '全部1', status: 'Default' },
+  running: { text: '运行中1', status: 'Processing' },
+  online: { text: '已上线', status: 'Success' },
+  error: { text: '异常', status: 'Error' }
+}
+
+const columns: ProColumns<TableListItem>[] = [
+  {
+    title: '单选按钮状态',
+    dataIndex: 'status',
+    valueType: 'radioButton',
+    initialValue: 'all',
+    width: 100,
+    valueEnum
+  },
+  {
+    title: '单选状态',
+    dataIndex: 'status',
+    valueType: 'radio',
+    initialValue: 'all',
+    width: 100,
+    valueEnum
+  },
+  {
+    title: '状态',
+    valueType: 'select',
+    dataIndex: 'status',
+    initialValue: ['all'],
+    width: 100,
+    valueEnum
+  },
+  {
+    title: '多选状态',
+    dataIndex: 'status',
+    initialValue: ['all'],
+    width: 100,
+    valueType: 'checkbox',
+    valueEnum
+  },
+  {
+    title: '级联选择器',
+    key: 'cascader',
+    dataIndex: 'cascader',
+    width: 100,
+    fieldProps: {
+      options: cascaderOptions,
+      fieldNames: {
+        children: 'language',
+        label: 'field'
       }
     },
-    {
-      title: '状态',
-      dataIndex: 'state',
-      initialValue: 1,
-      valueType: 'select',
-      request: async () => [
-        {
-          label: '月份',
-          value: 1
-        },
-        {
-          label: '周',
-          value: 2
-        },
-        {
-          label: '自定义',
-          value: 3
-        },
-        {
-          label: '不展示',
-          value: 4
-        }
-      ]
-    }
-  ]
+    valueType: 'cascader'
+  },
+  {
+    title: '树形下拉框',
+    key: 'treeSelect',
+    dataIndex: 'treeSelect',
+    width: 100,
+    // request: async () => cascaderOptions,
+    fieldProps: {
+      options: cascaderOptions,
+      fieldNames: {
+        children: 'language',
+        label: 'field'
+      },
+      showSearch: true,
+      filterTreeNode: true,
+      multiple: true,
+      treeNodeFilterProp: 'field'
+    },
+    valueType: 'treeSelect'
+  },
+  {
+    title: '时间范围',
+    key: 'dateTimeRange',
+    dataIndex: 'dateTimeRange',
+    hideInTable: true,
+    valueType: 'dateTimeRange',
+    fieldProps: {
+      // placeholder: []
+    },
+    renderFormItem: (_, { type, defaultRender }) => {
+      if (type === 'form') {
+        return null
+      }
 
-  return (
-    <ProTable<GithubIssueItem>
+      return defaultRender(_)
+    }
+  },
+  {
+    title: '操作',
+    key: 'option',
+    width: 120,
+    valueType: 'option',
+    render: (_, row, index, action) => [
+      <a
+        key="a"
+        onClick={() => {
+          action?.startEditable(row.key)
+        }}
+      >
+        编辑
+      </a>
+    ]
+  }
+]
+
+export default () => (
+  <>
+    <ProTable<TableListItem>
       columns={columns}
-      toolbar={{
-        settings: []
-      }}
-      request={async (params) => {
-        console.log(`request params:`, params)
-        return await new Promise(function (resolve) {
-          resolve({ data: [], success: false })
+      request={() => {
+        return Promise.resolve({
+          data: tableListDataSource,
+          success: true
         })
-        // return {
-        //   data: [
-        //     {
-        //       key: 1,
-        //       name: `TradeCode ${1}`,
-        //       createdAt: 1602572994055,
-        //       state: 'closed'
-        //     }
-        //   ],
-        //   success: true
-        // }
       }}
-      rowKey="key"
-      tableLayout="fixed"
-      dateFormatter="string"
-      headerTitle="动态自定义搜索栏"
       search={{
         defaultCollapsed: false,
-        optionRender: (searchConfig, formProps, dom) => [
-          ...dom.reverse(),
-          <Button
-            key="out"
-            onClick={() => {
-              const values = searchConfig?.form?.getFieldsValue()
-              console.log(values)
-            }}
-          >
-            导出
-          </Button>
-        ]
+        span: 12,
+        labelWidth: 'auto'
       }}
-      toolBarRender={() => [
-        <Button key="3" type="primary">
-          <PlusOutlined />
-          新建
-        </Button>
-      ]}
+      editable={{
+        type: 'multiple'
+      }}
+      rowKey="key"
+      headerTitle="样式类"
     />
-  )
-}
+  </>
+)

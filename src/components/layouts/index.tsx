@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
   DropboxOutlined
 } from '@ant-design/icons'
-import { Layout, Menu, theme, ConfigProvider } from 'antd'
+import { Layout, Menu, theme as antdtheme, ConfigProvider } from 'antd'
 import logo from '@/assets/logo.png'
 import { Outlet, useNavigate } from 'react-router-dom'
 import Logincom from '@/components/layouts/logininfo'
@@ -38,11 +38,7 @@ const layouts: React.FC = () => {
   const [toolsopen, settoolsopen] = useState(false)
   const {
     token: { colorBgContainer }
-  } = theme.useToken()
-
-  useEffect(() => {
-    console.log('navdata', navdata)
-  }, [navdata])
+  } = antdtheme.useToken()
 
   const MenuNav = (e: any) => {
     const { keyPath } = e
