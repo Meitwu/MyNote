@@ -18,7 +18,9 @@ const FormList = lazy(() => import('@/pages/demos/formlist'))
 const Hooks = lazy(() => import('@/pages/hook'))
 const Memo = lazy(() => import('@/pages/hook/react.memo'))
 // const Droptree = lazy(() => import('@/pages/demos/droptree/demo'))
-const ProtableFormitem = lazy(() => import('@/pages/demos/protableFormitem'))
+const ProtableFormitem = lazy(
+  () => import('@/pages/demos/protableFormitem/index.jsx')
+)
 const Uploaddemo = lazy(() => import('@/pages/demos/uploaddemo'))
 const CssDemo = lazy(() => import('@/pages/css/cssdemo'))
 const ReactRef = lazy(() => import('@/pages/demos/reactref'))
@@ -29,6 +31,8 @@ const UseTransiyion = lazy(() => import('@/pages/demos/useTransition'))
 const Hookdemos = lazy(() => import('@/pages/demos/hookdemos'))
 const Callback = lazy(() => import('@/pages/hook/usecallback'))
 const Usememo = lazy(() => import('@/pages/hook/useMemo'))
+const X6 = lazy(() => import('@/pages/antdv/X6'))
+const G2 = lazy(() => import('@/pages/antdv/G2'))
 
 export interface menuItem {
   name?: string
@@ -94,7 +98,21 @@ export const routes: menuItem[] = [
         name: '可视化',
         path: 'echarts',
         element: <Echarts />,
-        icon: <KeyOutlined />
+        icon: <KeyOutlined />,
+        children: [
+          {
+            icon: <KeyOutlined />,
+            name: 'G2',
+            path: 'G2',
+            element: <G2 />
+          },
+          {
+            icon: <KeyOutlined />,
+            name: 'X6',
+            path: 'x6',
+            element: <X6 />
+          }
+        ]
       },
       {
         name: '首页1',

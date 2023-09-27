@@ -1,5 +1,6 @@
 import type { ProColumns } from '@ant-design/pro-components'
 import { ProTable } from '@ant-design/pro-components'
+import { useAntdColumnResize } from 'react-antd-column-resize'
 
 const cascaderOptions = [
   {
@@ -45,6 +46,11 @@ export type TableListItem = {
   treeSelect: string[]
 }
 const tableListDataSource: TableListItem[] = []
+
+const { resizableColumns, components, tableWidth, resetColumns } =
+  useAntdColumnResize(() => {
+    return { columns, minWidth: 100 }
+  }, [])
 
 for (let i = 0; i < 2; i += 1) {
   tableListDataSource.push({
