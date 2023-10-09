@@ -31,6 +31,7 @@ const UseTransiyion = lazy(() => import('@/pages/demos/useTransition'))
 const Hookdemos = lazy(() => import('@/pages/demos/hookdemos'))
 const Callback = lazy(() => import('@/pages/hook/usecallback'))
 const Usememo = lazy(() => import('@/pages/hook/useMemo'))
+const Mobx = lazy(() => import('@/pages/demos/mobx'))
 const X6 = lazy(() => import('@/pages/antdv/X6'))
 const G2 = lazy(() => import('@/pages/antdv/G2'))
 
@@ -180,11 +181,11 @@ export const routes: menuItem[] = [
             path: 'UseTransiyion',
             element: <UseTransiyion />
           },
-          // {
-          //   name: 'droptree',
-          //   path: 'droptree',
-          //   element: <Droptree />
-          // },
+          {
+            name: 'Mobx',
+            path: 'Mobx',
+            element: <Mobx />
+          },
           {
             name: 'protableFormitem',
             path: 'protableFormitem',
