@@ -28,7 +28,7 @@ const Suspensebox = (
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initstate)
-
+  console.log(state)
   const RouteAuthFun = (routeList: menuItem[]) => {
     return routeList.map((item: menuItem) => {
       return (
