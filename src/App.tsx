@@ -3,7 +3,8 @@ import {
   Suspense,
   JSXElementConstructor,
   ReactElement,
-  ReactFragment
+  ReactFragment,
+  useState
 } from 'react'
 import { reducer } from './store/reducer'
 import { UserContext } from './store/context'
@@ -28,6 +29,7 @@ const Suspensebox = (
 
 function App() {
   const [state, dispatch] = useReducer(reducer, initstate)
+  const [color, setcolor] = useState('#111')
 
   const RouteAuthFun = (routeList: menuItem[]) => {
     return routeList.map((item: menuItem) => {
@@ -58,7 +60,7 @@ function App() {
     })
   }
   return (
-    <UserContext.Provider value={{ state, dispatch }}>
+    <UserContext.Provider value={{ state, dispatch, setcolor, color }}>
       <HashRouter>
         <Routes>{RouteAuthFun(routes)}</Routes>
       </HashRouter>

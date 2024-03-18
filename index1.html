@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="auth-language">
+        <button class="cn_btn active">1111</button>
+        <button class="eng_btn">2222</button>
+    </div>
+</body>
+<script>
+    var authLanguageDiv = document.querySelector('.auth-language');
+    var buttons = authLanguageDiv.querySelectorAll('button');
+    buttons.forEach(function (button) {
+        // 中文按钮包含active
+        if (button.classList.contains('active') && button.classList.contains('cn_btn')) {
+
+        }else{
+
+        }
+    });
+
+</script>
+
+</html>

@@ -1,87 +1,84 @@
-import React, { useCallback } from 'react'
-import { Form, Input, Button } from 'antd'
-import { PlusOutlined, MinusCircleOutlined } from '@ant-design/icons'
-import Index from '../useref'
-
-const Demo = () => {
-  const onFinish = (values) => {
-    console.log('Received values of form:', values)
+import React, { useEffect, useState } from 'react'
+import InfiniteScroll from 'react-infinite-scroll-component'
+import { Avatar, Divider, List, Skeleton } from 'antd'
+const App = () => {
+  const [loading, setLoading] = useState(false)
+  const [data, setData] = useState([
+    {
+      email: 'nenad.tosic@example.com',
+      gender: 'male',
+      name: { title: 'Mr', first: 'Nenad', last: 'Tošić' },
+      nat: 'RS',
+      picture: {
+        large: 'https://randomuser.me/api/portraits/men/50.jpg',
+        medium: 'https://randomuser.me/api/portraits/med/men/50.jpg',
+        thumbnail: 'https://randomuser.me/api/portraits/thumb/men/50.jpg'
+      }
+    }
+  ])
+  const loadMoreData = () => {
+    if (loading) {
+      return
+    }
+    setLoading(true)
+    fetch(
+      'https://randomuser.me/api/?results=10&inc=name,gender,email,nat,picture&noinfo'
+    )
+      .then((res) => res.json())
+      .then((body) => {
+        // setData([...data, ...body.results])
+        setLoading(false)
+      })
+      .catch(() => {
+        setLoading(false)
+      })
   }
+  useEffect(() => {
+    loadMoreData()
+  }, [])
 
+  console.log('data', data)
   return (
-    <Form name="dynamic_form_nest_item" onFinish={onFinish} autoComplete="off">
-      <Form.List name="users">
-        {(fields, { add, remove }) => (
-          <>
-            {fields.map((field, index) => (
-              <Form.Item
-                {...field}
-                label="User Name"
-                name={[field.name, 'name']}
-                fieldKey={[field.fieldKey, 'name']}
-                rules={[{ required: true, message: 'Missing user name' }]}
-              >
-                <Input placeholder={`User name${index}`} />
-                <Button
-                  type="dashed"
-                  onClick={() => {
-                    console.log('fieldsadd', fields)
-                    add()
-                    console.log('fieldsadd', fields)
-                  }}
-                  block
-                  icon={<PlusOutlined />}
-                >
-                  Add user
-                </Button>
-                <Button
-                  type="dashed"
-                  onClick={() => {
-                    remove(2)
-                    console.log('fieldsremove', fields)
-                  }}
-                  block
-                  icon={<PlusOutlined />}
-                >
-                  remove user
-                </Button>
-              </Form.Item>
-            ))}
-            <Form.Item>
-              <Button
-                type="dashed"
-                onClick={() => {
-                  console.log('fieldsadd', fields)
-                  add()
-                  console.log('fieldsadd', fields)
-                }}
-                block
-                icon={<PlusOutlined />}
-              >
-                Add user
-              </Button>
-              <Button
-                type="dashed"
-                onClick={() => {
-                  remove(2)
-                  console.log('fieldsremove', fields)
-                }}
-                block
-                icon={<PlusOutlined />}
-              >
-                remove user
-              </Button>
-            </Form.Item>
-          </>
-        )}
-      </Form.List>
-      <Form.Item>
-        <Button type="primary" htmlType="submit">
-          Submit
-        </Button>
-      </Form.Item>
-    </Form>
+    <div
+      id="scrollableDiv"
+      style={{
+        height: 400,
+        overflow: 'auto',
+        padding: '0 16px',
+        border: '1px solid rgba(140, 140, 140, 0.35)'
+      }}
+    >
+      <InfiniteScroll
+        dataLength={data.length}
+        next={loadMoreData}
+        hasMore={data.length < 50}
+        loader={
+          <Skeleton
+            avatar
+            paragraph={{
+              rows: 1
+            }}
+            active
+          />
+        }
+        endMessage={<Divider plain>It is all, nothing more 🤐</Divider>}
+        scrollableTarget="scrollableDiv"
+      >
+        <List
+          dataSource={data}
+          renderItem={(item) => (
+            <List.Item key={item.email}>
+              <List.Item.Meta
+                avatar={<Avatar src={item.picture.large} />}
+                title={<a href="https://ant.design">{item.name.last}</a>}
+                description={item.email}
+              />
+              <div>Content</div>
+            </List.Item>
+          )}
+        />
+      </InfiniteScroll>
+    </div>
   )
 }
-
-export default Demo
+export default App

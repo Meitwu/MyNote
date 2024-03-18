@@ -1,8 +1,8 @@
-// eslint-disable-next-line no-undef
 module.exports = {
   env: {
     browser: true,
-    es2021: true
+    es2021: true,
+    node: true
   },
   extends: [
     'eslint:recommended',
@@ -15,7 +15,8 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaVersion: 'latest',
-    sourceType: 'module'
+    sourceType: 'module',
+    requireConfigFile: false
   },
   plugins: [
     'react',

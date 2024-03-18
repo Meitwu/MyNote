@@ -26,14 +26,19 @@ const CssDemo = lazy(() => import('@/pages/css/cssdemo'))
 const ReactRef = lazy(() => import('@/pages/demos/reactref'))
 // const UseRef = lazy(() => import('@/pages/demos/useref'))
 const SortCom = lazy(() => import('@/pages/demos/sortcom'))
-const ModalRef = lazy(() => import('@/pages/demos/modalref'))
+const Sortablejs = lazy(() => import('@/pages/demos/sortablejs'))
 const UseTransiyion = lazy(() => import('@/pages/demos/useTransition'))
 const Hookdemos = lazy(() => import('@/pages/demos/hookdemos'))
 const Callback = lazy(() => import('@/pages/hook/usecallback'))
-const Usememo = lazy(() => import('@/pages/hook/useMemo'))
+// const Usememo = lazy(() => import('@/pages/hook/useMemo'))
 const Mobx = lazy(() => import('@/pages/demos/mobx'))
 const X6 = lazy(() => import('@/pages/antdv/X6'))
 const G2 = lazy(() => import('@/pages/antdv/G2'))
+const EventBus = lazy(() => import('@/pages/demos/eventbus'))
+const Editor = lazy(() => import('@/pages/demos/wangeditoreditor/index'))
+const Formediter = lazy(() => import('@/pages/demos/formediter/index'))
+const Hotwords = lazy(() => import('@/pages/demos/Hotwords'))
+const Antvx6 = lazy(() => import('@/pages/demos/antv_x6'))
 
 export interface menuItem {
   name?: string
@@ -151,13 +156,13 @@ export const routes: menuItem[] = [
             path: 'memo',
             element: <Memo />,
             icon: <KeyOutlined />
-          },
-          {
-            name: 'Usememo',
-            path: 'Usememo',
-            element: <Usememo />,
-            icon: <KeyOutlined />
           }
+          // {
+          //   name: 'Usememo',
+          //   path: 'Usememo',
+          //   element: <Usememo />,
+          //   icon: <KeyOutlined />
+          // }
         ],
         icon: <KeyOutlined />
       },
@@ -166,6 +171,31 @@ export const routes: menuItem[] = [
         path: '/demos',
         element: <Demos />,
         children: [
+          {
+            name: '热词',
+            path: 'Hotwords',
+            element: <Hotwords />
+          },
+          {
+            name: 'antvx6',
+            path: 'antvx6',
+            element: <Antvx6 />
+          },
+          {
+            name: 'Formediter',
+            path: 'Formediter',
+            element: <Formediter />
+          },
+          {
+            name: 'Editor',
+            path: 'Editor',
+            element: <Editor />
+          },
+          {
+            name: 'EventBus',
+            path: 'EventBus',
+            element: <EventBus />
+          },
           {
             name: 'hookdemos',
             path: 'hookdemos',
@@ -212,9 +242,9 @@ export const routes: menuItem[] = [
             element: <SortCom />
           },
           {
-            name: 'modal关闭时拿到modal内部的ref',
-            path: 'modalref',
-            element: <ModalRef />
+            name: 'sortablejs',
+            path: 'sortablejs',
+            element: <Sortablejs />
           }
         ],
         icon: <KeyOutlined />

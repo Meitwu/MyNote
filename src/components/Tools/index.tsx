@@ -14,7 +14,7 @@ export default function ToolsDrawer(props: toolsdrawertypes) {
   const ColorRef: any = useRef(null)
 
   const {
-    // state: { count, theme },
+    state: { count, theme },
     dispatch
   } = useContext(UserContext)
 
